@@ -271,6 +271,13 @@ def _process_bulk_chunk_success(
             yield ok, {op_type: item}
 
     if errors:
+        for error in errors:
+            for op, item in error.items():
+                print(f"Operation: {op}")
+                print(f"Item: {item}")
+                print(
+                    f"Error Details: {item.get('error', 'No error details available')}"
+                )
         raise BulkIndexError(f"{len(errors)} document(s) failed to index.", errors)
 
 
